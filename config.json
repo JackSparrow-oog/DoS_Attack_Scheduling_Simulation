@@ -1,0 +1,46 @@
+{
+  "project_name": "DoS attack schedule independent reproduction",
+  "paper": {
+    "title": "DoS attack schedules for remote state estimation under multi-sensor round-robin protocol",
+    "journal": "Systems & Control Letters 204 (2025) 106190",
+    "doi": "10.1016/j.sysconle.2025.106190"
+  },
+  "model": {
+    "A": [[2.0, 0.0], [0.0, 0.8]],
+    "Sigma_w": [[0.1, 0.0], [0.0, 0.2]],
+    "C": [
+      [[1.0, 0.0], [0.0, 0.3]],
+      [[0.6, 0.0], [0.0, 0.8]]
+    ],
+    "Sigma_v": [
+      [[1.0, 0.0], [0.0, 1.0]],
+      [[0.7, 0.0], [0.0, 1.0]]
+    ],
+    "Sigma_0_assumed": [[1.0, 0.0], [0.0, 1.0]]
+  },
+  "channel": {
+    "sensor_channel_probability_beta": [0.3, 0.7],
+    "attacker_channel_probability_eta": [0.6, 0.4],
+    "sensor_power_ps": [0.5, 0.6],
+    "attacker_power_pa": [0.3, 0.3],
+    "interference_multiplier_assumed": 5.0,
+    "alpha_diagonal_surrogate": "ps / (ps + interference_multiplier * pa)",
+    "off_diagonal_success_probability": 1.0
+  },
+  "experiment": {
+    "trials": 100000,
+    "time_horizon_min": 5,
+    "time_horizon_max": 20,
+    "number_of_attacks": 5,
+    "cost_definition": "front-loaded weighted mean of trace(P_k), weight_k = T-k+1",
+    "covariance_random_seed": 26071701,
+    "state_random_seed": 26071702,
+    "smart_sensor_covariance_scale_assumed": 0.7
+  },
+  "state_demo": {
+    "horizon": 16,
+    "A_override_assumed": [[0.92, 0.0], [0.0, 0.8]],
+    "force_packet_loss_during_first_five_attacks": true,
+    "note": "A11=2 in the paper normally produces an explosive sample path, inconsistent with the bounded appearance of Figs. 5-6. The override is used only for the illustrative state-trajectory figures, not for covariance experiments."
+  }
+}
